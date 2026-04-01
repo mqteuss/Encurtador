@@ -1,0 +1,14 @@
+{
+  "name": "unshortener",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Link Unshortener - Resolve shortened URLs to their final destination",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}
