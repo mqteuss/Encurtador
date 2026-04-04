@@ -80,13 +80,13 @@
               autocomplete="off"
               spellcheck="false"
             >
-            <button class="clear-btn" id="clear-btn" onclick="clearInput()" title="Limpar">
+            <button class="clear-btn" id="clear-btn" type="button" title="Limpar">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
               </svg>
             </button>
           </div>
-          <button class="resolve-btn" id="resolve-btn" onclick="resolveUrl()">
+          <button class="resolve-btn" id="resolve-btn" type="button">
             <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
             </svg>
@@ -95,19 +95,19 @@
         </div>
         <div class="shortcuts">
           <span class="shortcut-label">Exemplos:</span>
-          <button class="shortcut-chip" onclick="fillExample('https://bit.ly/4jCqpUY')">
+          <button class="shortcut-chip" type="button" data-example-url="https://bit.ly/4jCqpUY">
             <img src="https://www.google.com/s2/favicons?domain=bit.ly&sz=32" alt="" width="14" height="14">
             bit.ly
           </button>
-          <button class="shortcut-chip" onclick="fillExample('https://tinyurl.com/2s3jkw5r')">
+          <button class="shortcut-chip" type="button" data-example-url="https://tinyurl.com/2s3jkw5r">
             <img src="https://www.google.com/s2/favicons?domain=tinyurl.com&sz=32" alt="" width="14" height="14">
             tinyurl
           </button>
-          <button class="shortcut-chip" onclick="fillExample('https://t.co/uhnMHNKgiT')">
+          <button class="shortcut-chip" type="button" data-example-url="https://t.co/uhnMHNKgiT">
             <img src="https://www.google.com/s2/favicons?domain=t.co&sz=32" alt="" width="14" height="14">
             t.co
           </button>
-          <button class="shortcut-chip" onclick="fillExample('https://is.gd/example')">
+          <button class="shortcut-chip" type="button" data-example-url="https://is.gd/example">
             <img src="https://www.google.com/s2/favicons?domain=is.gd&sz=32" alt="" width="14" height="14">
             is.gd
           </button>
@@ -140,7 +140,7 @@
           <p class="error-title">Não foi possível resolver</p>
           <p class="error-message" id="error-message"></p>
         </div>
-        <button class="error-retry-btn" onclick="retryResolve()">Tentar novamente</button>
+        <button class="error-retry-btn" id="retry-btn" type="button">Tentar novamente</button>
       </div>
     </section>
 
@@ -171,14 +171,14 @@
         </div>
 
         <div class="dest-actions">
-          <button class="act-btn primary-act" id="copy-btn" onclick="copyFinalUrl()">
+          <button class="act-btn primary-act" id="copy-btn" type="button">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
             </svg>
             <span>Copiar URL</span>
           </button>
-          <button class="act-btn" onclick="openFinalUrl()">
+          <button class="act-btn" id="open-btn" type="button">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
               <polyline points="15 3 21 3 21 9"/>
@@ -186,7 +186,7 @@
             </svg>
             <span>Abrir Link</span>
           </button>
-          <button class="act-btn" onclick="resolveAnother()">
+          <button class="act-btn" id="resolve-another-btn" type="button">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
             </svg>

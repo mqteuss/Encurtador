@@ -36,6 +36,10 @@ const statusBadge = document.getElementById('status-badge');
 const chainTimeline = document.getElementById('chain-timeline');
 const chainCount = document.getElementById('chain-count');
 const copyBtn = document.getElementById('copy-btn');
+const retryBtn = document.getElementById('retry-btn');
+const openBtn = document.getElementById('open-btn');
+const resolveAnotherBtn = document.getElementById('resolve-another-btn');
+const shortcutChips = document.querySelectorAll('.shortcut-chip[data-example-url]');
 
 // ============================
 // CONSTANTS
@@ -119,6 +123,19 @@ function isSafeUrl(url) {
 // ============================
 // INPUT EVENTS
 // ============================
+resolveBtn.addEventListener('click', resolveUrl);
+clearBtn.addEventListener('click', clearInput);
+copyBtn.addEventListener('click', copyFinalUrl);
+if (retryBtn) retryBtn.addEventListener('click', retryResolve);
+if (openBtn) openBtn.addEventListener('click', openFinalUrl);
+if (resolveAnotherBtn) resolveAnotherBtn.addEventListener('click', resolveAnother);
+
+shortcutChips.forEach((chip) => {
+  chip.addEventListener('click', () => {
+    fillExample(chip.dataset.exampleUrl || '');
+  });
+});
+
 urlInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     e.preventDefault();
