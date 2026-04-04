@@ -42,6 +42,8 @@ const openBtn = document.getElementById('open-btn');
 const resolveAnotherBtn = document.getElementById('resolve-another-btn');
 const shortcutChips = document.querySelectorAll('.shortcut-chip[data-example-url]');
 const installBtn = document.getElementById('install-btn');
+const themeToggleBtn = document.getElementById('theme-toggle-btn');
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
 // ============================
 // CONSTANTS
@@ -49,6 +51,11 @@ const installBtn = document.getElementById('install-btn');
 const MAX_INPUT_LENGTH = 2048;
 const ALLOWED_PROTOCOLS = ['http:', 'https:'];
 const REQUEST_TIMEOUT = 20000; // 20s
+const THEME_STORAGE_KEY = 'unshortener-theme';
+const THEMES = {
+  LIGHT: 'light',
+  DARK: 'dark',
+};
 
 // ============================
 // INPUT SECURITY
@@ -132,6 +139,7 @@ if (retryBtn) retryBtn.addEventListener('click', retryResolve);
 if (openBtn) openBtn.addEventListener('click', openFinalUrl);
 if (resolveAnotherBtn) resolveAnotherBtn.addEventListener('click', resolveAnother);
 if (installBtn) installBtn.addEventListener('click', installPwaApp);
+if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
 
 shortcutChips.forEach((chip) => {
   chip.addEventListener('click', () => {
@@ -182,6 +190,62 @@ function clearInput() {
   urlInput.value = '';
   clearBtn.classList.remove('visible');
   urlInput.focus();
+}
+
+function getSavedTheme() {
+  try {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    if (stored === THEMES.LIGHT || stored === THEMES.DARK) {
+      return stored;
+    }
+  } catch {
+    // Ignore storage errors
+  }
+  return null;
+}
+
+function saveTheme(theme) {
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+function updateThemeToggleLabel(theme) {
+  if (!themeToggleBtn) return;
+  themeToggleBtn.textContent = theme === THEMES.DARK ? 'Tema: Escuro' : 'Tema: Claro';
+}
+
+function updateThemeMetaColor(theme) {
+  if (!themeColorMeta) return;
+  themeColorMeta.setAttribute('content', theme === THEMES.DARK ? '#000000' : '#f4f6f8');
+}
+
+function applyTheme(theme, persist = true) {
+  const resolved = theme === THEMES.DARK ? THEMES.DARK : THEMES.LIGHT;
+  document.documentElement.setAttribute('data-theme', resolved);
+  updateThemeToggleLabel(resolved);
+  updateThemeMetaColor(resolved);
+  if (persist) saveTheme(resolved);
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') === THEMES.DARK
+    ? THEMES.DARK
+    : THEMES.LIGHT;
+  const next = current === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK;
+  applyTheme(next);
+}
+
+function initializeTheme() {
+  const savedTheme = getSavedTheme();
+  if (savedTheme) {
+    applyTheme(savedTheme, false);
+    return;
+  }
+
+  applyTheme(THEMES.LIGHT, false);
 }
 
 async function installPwaApp() {
@@ -540,5 +604,6 @@ document.head.appendChild(shakeCSS);
 // ============================
 // AUTO-FOCUS
 // ============================
+initializeTheme();
 registerServiceWorker();
 urlInput.focus();

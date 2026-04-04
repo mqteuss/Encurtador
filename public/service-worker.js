@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const CACHE_NAME = 'unshortener-v1.0.0';
+const CACHE_NAME = 'unshortener-v1.1.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -42,6 +42,27 @@ self.addEventListener('fetch', (event) => {
 
   if (url.pathname.startsWith('/api/')) {
     event.respondWith(fetch(req));
+    return;
+  }
+
+  const isUpdatableStaticAsset = (
+    url.pathname.endsWith('.css')
+    || url.pathname.endsWith('.js')
+    || url.pathname.endsWith('.webmanifest')
+  );
+
+  if (isUpdatableStaticAsset) {
+    event.respondWith(
+      fetch(req)
+        .then((response) => {
+          if (response && response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(req))
+    );
     return;
   }
 
