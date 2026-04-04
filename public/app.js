@@ -19,6 +19,7 @@
 // ============================
 let lastResolvedData = null;
 let currentAbortController = null;
+let deferredInstallPrompt = null;
 
 // ============================
 // DOM REFERENCES
@@ -40,6 +41,7 @@ const retryBtn = document.getElementById('retry-btn');
 const openBtn = document.getElementById('open-btn');
 const resolveAnotherBtn = document.getElementById('resolve-another-btn');
 const shortcutChips = document.querySelectorAll('.shortcut-chip[data-example-url]');
+const installBtn = document.getElementById('install-btn');
 
 // ============================
 // CONSTANTS
@@ -129,11 +131,27 @@ copyBtn.addEventListener('click', copyFinalUrl);
 if (retryBtn) retryBtn.addEventListener('click', retryResolve);
 if (openBtn) openBtn.addEventListener('click', openFinalUrl);
 if (resolveAnotherBtn) resolveAnotherBtn.addEventListener('click', resolveAnother);
+if (installBtn) installBtn.addEventListener('click', installPwaApp);
 
 shortcutChips.forEach((chip) => {
   chip.addEventListener('click', () => {
     fillExample(chip.dataset.exampleUrl || '');
   });
+});
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  if (installBtn) {
+    installBtn.hidden = false;
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  if (installBtn) {
+    installBtn.hidden = true;
+  }
 });
 
 urlInput.addEventListener('keydown', (e) => {
@@ -164,6 +182,30 @@ function clearInput() {
   urlInput.value = '';
   clearBtn.classList.remove('visible');
   urlInput.focus();
+}
+
+async function installPwaApp() {
+  if (!deferredInstallPrompt) return;
+
+  deferredInstallPrompt.prompt();
+  const choice = await deferredInstallPrompt.userChoice;
+
+  if (choice && choice.outcome === 'accepted') {
+    deferredInstallPrompt = null;
+    if (installBtn) {
+      installBtn.hidden = true;
+    }
+  }
+}
+
+function registerServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').catch(() => {
+      // Non-fatal: app should still work without offline mode
+    });
+  });
 }
 
 // ============================
@@ -375,7 +417,7 @@ function displayResult(data) {
 
   // Reset copy button
   copyBtn.classList.remove('copied');
-  copyBtn.querySelector('span').textContent = 'Copiar URL';
+  copyBtn.textContent = 'Copiar URL';
 
   showSection(resultSection);
   resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -442,10 +484,10 @@ async function copyFinalUrl() {
     }
 
     copyBtn.classList.add('copied');
-    copyBtn.querySelector('span').textContent = 'Copiado!';
+    copyBtn.textContent = 'Copiado!';
     setTimeout(() => {
       copyBtn.classList.remove('copied');
-      copyBtn.querySelector('span').textContent = 'Copiar URL';
+      copyBtn.textContent = 'Copiar URL';
     }, 2000);
   } catch {
     // Silently fail — don't expose error details
@@ -498,4 +540,5 @@ document.head.appendChild(shakeCSS);
 // ============================
 // AUTO-FOCUS
 // ============================
+registerServiceWorker();
 urlInput.focus();

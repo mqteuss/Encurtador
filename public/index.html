@@ -1,70 +1,56 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unshortener — Descubra o Link Real</title>
-  <meta name="description" content="Cole qualquer link encurtado e descubra o destino final. Rápido, seguro e sem precisar clicar no link.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+  <title>Unshortener - Descubra o Link Real</title>
+  <meta name="description" content="Cole qualquer link encurtado e descubra o destino final com rapidez e seguranca.">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Unshortener">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <!-- Ambient background -->
-  <div class="ambient-bg">
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
-    <div class="ambient-orb orb-3"></div>
-    <div class="grid-overlay"></div>
-  </div>
+  <div class="ambient-bg" aria-hidden="true"></div>
 
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-inner">
       <div class="nav-brand">
-        <div class="brand-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#navGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-            <defs>
-              <linearGradient id="navGrad" x1="0" y1="0" x2="24" y2="24">
-                <stop stop-color="#818cf8"/>
-                <stop offset="1" stop-color="#c084fc"/>
-              </linearGradient>
-            </defs>
           </svg>
         </div>
         <span class="brand-name">Unshortener</span>
       </div>
-      <div class="nav-badge">
-        <span class="status-dot"></span>
-        Online
+      <div class="nav-actions">
+        <button class="install-btn" id="install-btn" type="button" hidden>Instalar app</button>
+        <div class="nav-badge">
+          <span class="status-dot"></span>
+          Seguro
+        </div>
       </div>
     </div>
   </nav>
 
   <main class="main">
-    <!-- Hero -->
     <header class="hero">
-      <div class="hero-eyebrow">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
-        <span>Seguro & Privado</span>
-      </div>
-      <h1 class="hero-title">
-        Descubra para onde o<br>
-        <span class="hero-highlight">link realmente leva</span>
-      </h1>
+      <div class="hero-eyebrow">Verificacao de links sem clique</div>
+      <h1 class="hero-title">Descubra para onde o link realmente leva</h1>
       <p class="hero-subtitle">
-        Cole qualquer URL encurtada e revele o destino final instantaneamente.<br class="hide-mobile">
-        Proteja-se contra phishing, malware e redirecionamentos suspeitos.
+        Cole uma URL encurtada e veja o destino final antes de abrir. Simples, rapido e pensado para mobile.
       </p>
     </header>
 
-    <!-- Resolver Card -->
     <section class="resolver-card" id="resolver-card">
       <div class="resolver-inner">
         <div class="input-row">
@@ -76,7 +62,7 @@
             <input
               type="url"
               id="url-input"
-              placeholder="Cole o link encurtado aqui..."
+              placeholder="Cole o link encurtado aqui"
               autocomplete="off"
               spellcheck="false"
             >
@@ -87,74 +73,55 @@
             </button>
           </div>
           <button class="resolve-btn" id="resolve-btn" type="button">
-            <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
             </svg>
-            <span>Resolver Link</span>
+            <span>Resolver link</span>
           </button>
         </div>
         <div class="shortcuts">
           <span class="shortcut-label">Exemplos:</span>
-          <button class="shortcut-chip" type="button" data-example-url="https://bit.ly/4jCqpUY">
-            <img src="https://www.google.com/s2/favicons?domain=bit.ly&sz=32" alt="" width="14" height="14">
-            bit.ly
-          </button>
-          <button class="shortcut-chip" type="button" data-example-url="https://tinyurl.com/2s3jkw5r">
-            <img src="https://www.google.com/s2/favicons?domain=tinyurl.com&sz=32" alt="" width="14" height="14">
-            tinyurl
-          </button>
-          <button class="shortcut-chip" type="button" data-example-url="https://t.co/uhnMHNKgiT">
-            <img src="https://www.google.com/s2/favicons?domain=t.co&sz=32" alt="" width="14" height="14">
-            t.co
-          </button>
-          <button class="shortcut-chip" type="button" data-example-url="https://is.gd/example">
-            <img src="https://www.google.com/s2/favicons?domain=is.gd&sz=32" alt="" width="14" height="14">
-            is.gd
-          </button>
+          <button class="shortcut-chip" type="button" data-example-url="https://bit.ly/4jCqpUY">bit.ly</button>
+          <button class="shortcut-chip" type="button" data-example-url="https://tinyurl.com/2s3jkw5r">tinyurl</button>
+          <button class="shortcut-chip" type="button" data-example-url="https://t.co/uhnMHNKgiT">t.co</button>
+          <button class="shortcut-chip" type="button" data-example-url="https://is.gd/example">is.gd</button>
         </div>
       </div>
     </section>
 
-    <!-- Loading -->
     <section class="state-section loading-state" id="loading-section">
       <div class="loader">
         <div class="loader-track">
           <div class="loader-bar"></div>
         </div>
-        <div class="loader-dots">
-          <span></span><span></span><span></span>
-        </div>
       </div>
       <p class="state-text">Seguindo cadeia de redirecionamentos<span class="ellipsis"></span></p>
     </section>
 
-    <!-- Error -->
     <section class="state-section error-state" id="error-section">
       <div class="error-banner">
-        <div class="error-icon-wrap">
+        <div class="error-icon-wrap" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
           </svg>
         </div>
         <div class="error-body">
-          <p class="error-title">Não foi possível resolver</p>
+          <p class="error-title">Nao foi possivel resolver</p>
           <p class="error-message" id="error-message"></p>
         </div>
         <button class="error-retry-btn" id="retry-btn" type="button">Tentar novamente</button>
       </div>
     </section>
 
-    <!-- Result -->
     <section class="result-section" id="result-section">
-      <!-- Destination Card -->
       <div class="dest-card">
         <div class="dest-header">
           <div class="dest-label">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
               <polyline points="22 4 12 14.01 9 11.01"/>
             </svg>
-            <span>Destino Final</span>
+            <span>Destino final</span>
           </div>
           <span class="http-badge" id="status-badge">200</span>
         </div>
@@ -171,105 +138,44 @@
         </div>
 
         <div class="dest-actions">
-          <button class="act-btn primary-act" id="copy-btn" type="button">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-            </svg>
-            <span>Copiar URL</span>
-          </button>
-          <button class="act-btn" id="open-btn" type="button">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-              <polyline points="15 3 21 3 21 9"/>
-              <line x1="10" y1="14" x2="21" y2="3"/>
-            </svg>
-            <span>Abrir Link</span>
-          </button>
-          <button class="act-btn" id="resolve-another-btn" type="button">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
-            </svg>
-            <span>Novo Link</span>
-          </button>
+          <button class="act-btn primary-act" id="copy-btn" type="button">Copiar URL</button>
+          <button class="act-btn" id="open-btn" type="button">Abrir link</button>
+          <button class="act-btn" id="resolve-another-btn" type="button">Novo link</button>
         </div>
       </div>
 
-      <!-- Redirect Chain -->
       <div class="chain-card">
         <div class="chain-header">
-          <div class="chain-label">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="17 1 21 5 17 9"/>
-              <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
-              <polyline points="7 23 3 19 7 15"/>
-              <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
-            </svg>
-            <span>Cadeia de Redirecionamentos</span>
-          </div>
+          <div class="chain-label">Cadeia de redirecionamentos</div>
           <span class="chain-count" id="chain-count"></span>
         </div>
         <div class="chain-timeline" id="chain-timeline"></div>
       </div>
     </section>
 
-    <!-- Features -->
     <section class="features" id="features">
       <div class="feature-card">
-        <div class="feature-icon fi-shield">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-        </div>
-        <h3>Proteção Anti-Phishing</h3>
-        <p>Verifique links suspeitos antes de clicar. Veja o destino real sem expor seus dados.</p>
+        <h3>Anti-phishing</h3>
+        <p>Verifique links suspeitos antes de abrir no navegador.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon fi-bolt">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-          </svg>
-        </div>
-        <h3>Resolução Instantânea</h3>
-        <p>Resultados em milissegundos. Seguimos até 20 redirecionamentos em cadeia automaticamente.</p>
+        <h3>Rapido</h3>
+        <p>Segue automaticamente a cadeia de redirecionamentos.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon fi-eye">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-            <circle cx="12" cy="12" r="3"/>
-          </svg>
-        </div>
-        <h3>Transparência Total</h3>
-        <p>Visualize cada etapa do redirecionamento. Saiba exatamente por onde seu clique passaria.</p>
-      </div>
-    </section>
-
-    <!-- Supported Services -->
-    <section class="supported">
-      <p class="supported-label">Compatível com todos os encurtadores</p>
-      <div class="supported-logos">
-        <span class="svc-tag">bit.ly</span>
-        <span class="svc-tag">tinyurl</span>
-        <span class="svc-tag">t.co</span>
-        <span class="svc-tag">is.gd</span>
-        <span class="svc-tag">ow.ly</span>
-        <span class="svc-tag">goo.gl</span>
-        <span class="svc-tag">rb.gy</span>
-        <span class="svc-tag">cutt.ly</span>
-        <span class="svc-tag">short.io</span>
+        <h3>Transparente</h3>
+        <p>Mostra cada etapa para voce entender o destino real.</p>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="footer-inner">
-      <p class="footer-copy">&copy; 2026 Unshortener — Ferramenta gratuita de verificação de links</p>
-      <p class="footer-made">Feito com <span class="heart">♥</span> para sua segurança online</p>
+      <p class="footer-copy">&copy; 2026 Unshortener</p>
+      <p class="footer-made">Ferramenta gratuita para verificacao de links</p>
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="/app.js"></script>
 </body>
 </html>
